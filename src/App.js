@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios"
+import React from "react"
+import Detail from "./Detail"
+import List from "./List"
+import Home from "./Home"
+import Login from "./Login"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+} from "react-router-dom"
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <nav>
+        <ul>
+          <li>
+            <NavLink
+              activeStyle={{
+                fontWeight: "bold",
+                color: "red",
+              }}
+              to="/"
+              exact
+            >
+              Home
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              activeStyle={{
+                fontWeight: "bold",
+                color: "red",
+              }}
+              to="/users"
+            >
+              Users
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              activeStyle={{
+                fontWeight: "bold",
+                color: "red",
+              }}
+              to="/login"
+            >
+              Login
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route path="/detail/:id">
+          <Detail />
+        </Route>
+        <Route path="/users">
+          <List />
+        </Route>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
-export default App;
+export default App
