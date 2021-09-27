@@ -1,10 +1,23 @@
 import React from "react"
+import { config } from "./config"
+import axios from "axios"
 
-const Login = () => {
+const fakelogin = () =>
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res({
+        accessToken: "dfghhkkjhjk",
+      })
+    }, 2000)
+  })
+
+const Login = ({ setToken }) => {
   const [email, setEmail] = React.useState()
   const [passwd, setPasswd] = React.useState()
   const [shpw, setShpw] = React.useState()
+  const [loading, setLoading] = React.useState()
   console.log(email)
+
   return (
     <div>
       <div>
@@ -19,6 +32,25 @@ const Login = () => {
         <button onClick={() => setShpw(!shpw)}>
           {" "}
           {shpw ? "Hide" : "Show"}
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            setLoading(true)
+            // axios
+            //   .post(config.url + "auth/login", {
+            //     email: email,
+            //     password: passwd,
+            //   })
+            fakelogin().then(function (response) {
+              setLoading()
+              setToken(response.accessToken)
+            })
+          }}
+          disabled={loading}
+        >
+          {loading ? "Loading" : "Login"}
         </button>
       </div>
     </div>
