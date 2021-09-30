@@ -1,26 +1,29 @@
 import axios from "axios"
 import React from "react"
 import { Link } from "react-router-dom"
+import { config } from "./config"
 
-const getUserId = (user) => {
-  const first = user.url.slice(0, -1)
-
-  return first.slice(first.lastIndexOf("/") + 1)
-}
-
-const List = () => {
+const List = ({ token }) => {
   const [value, setValue] = React.useState([])
 
   React.useEffect(() => {
-    const url = "https://swapi.dev/api/people"
-    axios.get(url).then((x) => setValue(x.data.results))
-  }, [])
-
+    axios({
+      method: "get",
+      url: `${config.url}events`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }).then((x) => {
+      setValue(x.data)
+    })
+  }, []) // eslint-disable-line
+  console.log(value)
   return (
     <ul>
       {value.map((x) => (
-        <Link to={`/detail/${getUserId(x)}`}>
-          <li>{x.name}</li>
+        <Link to={`/detail/${x.id}`}>
+          <li>{x.title}</li>
         </Link>
       ))}
     </ul>

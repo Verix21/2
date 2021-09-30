@@ -2,21 +2,11 @@ import React from "react"
 import { config } from "./config"
 import axios from "axios"
 
-const fakelogin = () =>
-  new Promise((res, rej) => {
-    setTimeout(() => {
-      res({
-        accessToken: "dfghhkkjhjk",
-      })
-    }, 2000)
-  })
-
 const Login = ({ setToken }) => {
-  const [email, setEmail] = React.useState()
-  const [passwd, setPasswd] = React.useState()
+  const [email, setEmail] = React.useState("john@doe.com")
+  const [passwd, setPasswd] = React.useState("hunter2")
   const [shpw, setShpw] = React.useState()
   const [loading, setLoading] = React.useState()
-  console.log(email)
 
   return (
     <div>
@@ -38,15 +28,16 @@ const Login = ({ setToken }) => {
         <button
           onClick={() => {
             setLoading(true)
-            // axios
-            //   .post(config.url + "auth/login", {
-            //     email: email,
-            //     password: passwd,
-            //   })
-            fakelogin().then(function (response) {
-              setLoading()
-              setToken(response.accessToken)
-            })
+            axios
+              .post(config.url + "auth/login", {
+                email: email,
+                password: passwd,
+              })
+              .then(function (response) {
+                setLoading()
+
+                setToken(response.data.accessToken)
+              })
           }}
           disabled={loading}
         >

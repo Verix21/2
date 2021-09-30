@@ -1,12 +1,13 @@
+import axios from "axios"
 import React from "react"
 import { NavLink } from "react-router-dom"
+import { config } from "./config"
 
-const Header = ({ token, setToken }) => {
+const Header = ({ token, setToken, profile }) => {
   return (
     <nav>
-      {token ? "logged in" : "logged out"}
-
-      {token && <button onClick={() => setToken(null)}>Logout</button>}
+      <div>{profile.first_name + " " + profile.last_name}</div>
+      <button onClick={() => setToken(null)}>Logout</button>
 
       <ul>
         <li>
