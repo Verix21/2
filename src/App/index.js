@@ -1,15 +1,17 @@
 import axios from "axios"
 import React from "react"
-import Detail from "./Detail"
-import List from "./List"
-import Home from "./Home"
-import Login from "./Login"
+import Detail from "pages/Detail"
+import Events from "pages/Events"
+import Home from "pages/Home"
+import Login from "pages/Login"
+import Create from "pages/Create"
 import Header from "./Header"
-import { config } from "./config"
+import { config } from "config"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import "./style.css"
 
 const App = () => {
-  const [token, setToken] = React.useState(undefined)
+  const [token, setToken] = React.useState(localStorage.getItem("accessToken"))
 
   const [profile, setProfile] = React.useState()
 
@@ -40,15 +42,13 @@ const App = () => {
       <Header token={token} setToken={setToken} profile={profile} />
 
       <Switch>
-        <Route path="/detail/:id">
-          <Detail token={token} profile={profile} />
-        </Route>
-        <Route path="/users">
-          <List token={token} />
-        </Route>
-        <Route path="/" exact>
-          <Home />
-        </Route>
+        <Route
+          path="/detail/:id"
+          render={(p) => <Detail {...p} token={token} profile={profile} />}
+        />
+        <Route path="/create" render={(p) => <Create {...p} token={token} />} />
+        <Route path="/events" render={(p) => <Events {...p} token={token} />} />
+        <Route path="/" exact render={(p) => <Home {...p} />} />
         <Route path="*">Not found</Route>
       </Switch>
     </Router>

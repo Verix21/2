@@ -1,7 +1,9 @@
 import axios from "axios"
 import React from "react"
 import { Link } from "react-router-dom"
-import { config } from "./config"
+import { config } from "config"
+import Button from "components/Button"
+import "./style.css"
 
 const List = ({ token }) => {
   const [value, setValue] = React.useState([])
@@ -20,13 +22,18 @@ const List = ({ token }) => {
   }, []) // eslint-disable-line
   console.log(value)
   return (
-    <ul>
-      {value.map((x) => (
-        <Link to={`/detail/${x.id}`}>
-          <li>{x.title}</li>
-        </Link>
-      ))}
-    </ul>
+    <div class="events">
+      <div class="events__list">
+        {value.map((x) => (
+          <Link className="events__item" to={`/detail/${x.id}`}>
+            <div>{x.title}</div>
+          </Link>
+        ))}
+      </div>
+      <Link to="/create">
+        <Button text="Create new event" />
+      </Link>
+    </div>
   )
 }
 

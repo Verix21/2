@@ -1,5 +1,5 @@
 import React from "react"
-import { config } from "./config"
+import { config } from "config"
 import axios from "axios"
 
 const Login = ({ setToken }) => {
@@ -37,6 +37,7 @@ const Login = ({ setToken }) => {
                 setLoading()
 
                 setToken(response.data.accessToken)
+                localStorage.setItem("accessToken", response.data.accessToken)
               })
           }}
           disabled={loading}
